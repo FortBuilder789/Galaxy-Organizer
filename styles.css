@@ -1,0 +1,219 @@
+:root{
+  --sidebar-width:320px;
+  --accent:#6e48aa;
+  --bg:#050514;
+  --muted:#9aa;
+  --toast-bg: rgba(0,0,0,0.55);
+  --danger:#b33;
+  --panel-bg: #0f0f18;
+  --panel-border: rgba(255,255,255,0.03);
+  --glass: rgba(255,255,255,0.02);
+}
+
+/* RESET / BASE */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter, system-ui, "Segoe UI", Roboto, Arial, sans-serif;background:var(--bg);color:#fff}
+body{display:flex;overflow:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+/* LEFT SIDEBAR */
+#left{
+  width:var(--sidebar-width);
+  min-width:220px;
+  background:var(--panel-bg);
+  border-right:1px solid var(--panel-border);
+  display:flex;
+  flex-direction:column;
+}
+.left-top{padding:14px;border-bottom:1px solid var(--panel-border)}
+.title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.title-row > div:first-child{font-weight:700;color:var(--accent);font-size:1.05rem}
+.creator-muted{color:var(--muted);font-size:13px;line-height:1.1;text-align:right;max-width:170px}
+
+/* CONTROLS (two-row) */
+.controls{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.controls-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+button.small{background:transparent;border:1px solid var(--panel-border);padding:6px 8px;border-radius:8px;color:var(--accent);cursor:pointer;font-size:0.92rem}
+button.small:hover{background:rgba(255,255,255,0.02)}
+button.small:focus{outline:2px solid rgba(110,72,170,0.18);outline-offset:2px}
+.btn-danger{background:var(--danger);border:none;color:#fff;padding:6px 8px;border-radius:8px;cursor:pointer}
+
+/* ICON BUTTON */
+.icon-btn{background:transparent;border:none;color:#9aa;cursor:pointer;padding:6px;border-radius:6px;font-size:0.95rem}
+.icon-btn:hover{color:#fff}
+
+/* TAB LIST (vertical) */
+#tab-list{padding:8px;overflow:auto;flex:1;display:flex;flex-direction:column;gap:8px}
+.tab{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:10px;
+  border-radius:8px;
+  background:rgba(255,255,255,0.01);
+  cursor:pointer;
+  transition:background .18s, box-shadow .18s, transform .12s;
+  border:1px solid transparent;
+}
+.tab:hover{background:rgba(255,255,255,0.03)}
+.tab.active{
+  background:linear-gradient(90deg, rgba(110,72,170,0.12), rgba(110,72,170,0.05));
+  font-weight:700;
+  border-color: rgba(110,72,170,0.18);
+  transform:translateY(-1px);
+}
+.tab .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px;color:#fff}
+.tab .actions{display:flex;gap:6px;align-items:center}
+
+/* LEFT BOTTOM */
+.left-bottom-muted{padding:10px;border-top:1px solid var(--panel-border);font-size:13px;color:var(--muted)}
+
+/* EDITOR */
+#editor{
+  width:360px;
+  background:#11111a;
+  border-left:1px solid var(--panel-border);
+  padding:14px;
+  overflow:auto;
+  transition:transform .2s ease;
+  position:relative;
+}
+#editor.collapsed{transform:translateX(102%)}
+#editor h3{margin:0 0 8px 0;color:var(--accent)}
+.section{background:var(--glass);padding:8px;border-radius:8px;margin-top:10px}
+label{display:block;font-size:13px;color:#ccd;margin-bottom:6px}
+input[type=text], input[type=url], select, textarea{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:#0b0b12;color:#fff}
+input[type=range]{width:100%}
+input[type=color]{width:48px;height:36px;padding:0;border-radius:6px;border:none}
+.muted{color:var(--muted);font-size:13px}
+.row{display:flex;gap:8px;align-items:center}
+
+/* VIEWPORT */
+#viewport{flex:1;position:relative;overflow:hidden;background:radial-gradient(ellipse at center,#071028 0%,#020215 100%);display:flex;align-items:center;justify-content:center}
+.bg-layer{position:absolute;inset:0;z-index:0;transition:background .2s}
+.space{position:relative;width:100%;height:100%;z-index:1;overflow:hidden}
+
+/* BODIES (sun/planet) */
+.body{position:absolute;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.6);user-select:none;box-sizing:border-box;overflow:hidden}
+.sun{z-index:3;pointer-events:auto;cursor:pointer}
+.planet{z-index:4;cursor:pointer;transition:transform .12s ease, box-shadow .12s ease;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.planet.selected,.sun.selected{box-shadow:0 0 0 3px rgba(76,175,80,0.15);transform:scale(1.04)}
+
+/* SHAPES */
+.shape-circle{border-radius:50%}
+.shape-square{border-radius:12px}
+.shape-diamond{clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%)}
+.shape-star{clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.shape-triangle{clip-path:polygon(50% 0%, 0% 100%, 100% 100%)}
+.shape-pentagon{clip-path:polygon(50% 0%, 95% 38%, 77% 100%, 23% 100%, 5% 38%)}
+.shape-hexagon{clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%)}
+
+.orbit-ring{position:absolute;border-radius:50%;border:1px dashed rgba(255,255,255,0.04);z-index:2;pointer-events:none}
+
+/* TOASTS */
+#toast-container{position:fixed;right:16px;bottom:10px;z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.toast{background:var(--toast-bg);padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);color:#fff;min-width:180px}
+.toast.success{border-color:rgba(76,175,80,0.25)}
+
+/* PARTY ANIM */
+.party .sun, .party .planet{animation:hueSpin 6s linear infinite}
+@keyframes hueSpin{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(360deg)}}
+
+/* HORIZONTAL GALAXY TABS (modern pill nav) */
+.galaxy-tabs-horizontal{
+  display:flex;
+  gap:8px;
+  padding:8px 10px;
+  background:rgba(255,255,255,0.02);
+  border-bottom:1px solid rgba(255,255,255,0.03);
+  overflow-x:auto;
+  align-items:center;
+}
+.galaxy-tabs-horizontal::-webkit-scrollbar{height:7px}
+.galaxy-tabs-horizontal::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.12);border-radius:4px}
+.galaxy-tab{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+  padding:6px 14px;
+  border-radius:999px;
+  color:#fff;
+  font-size:0.95rem;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:background .18s, border-color .18s, transform .12s;
+}
+.galaxy-tab:hover{background:rgba(255,255,255,0.08)}
+.galaxy-tab.active{
+  background:linear-gradient(90deg, rgba(110,72,170,0.12), rgba(110,72,170,0.06));
+  border-color:rgba(110,72,170,0.18);
+  font-weight:700;
+  transform:translateY(-1px);
+}
+
+/* MODALS & OVERLAY */
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:10000;display:none}
+.hidden{display:none}
+.modal{
+  position:fixed;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  z-index:10001;
+  background:#0b0b12;
+  padding:18px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.04);
+  min-width:260px;
+  max-width:96%;
+  box-shadow:0 12px 30px rgba(0,0,0,0.6);
+}
+
+/* CONFIRM */
+#confirm-text{font-weight:700;color:#fff}
+
+/* ABOUT FAB (bottom-right) */
+.fab{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:10002;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.06);
+  background:linear-gradient(180deg,var(--accent),#5b3f9a);
+  color:#fff;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,0.5);
+  font-weight:600;
+}
+.fab:hover{transform:translateY(-2px)}
+
+/* SETTINGS MODAL (if created dynamically) */
+#settings-modal{display:none}
+
+/* ACCESSIBILITY */
+button{font-family:inherit}
+a{color:var(--accent);text-decoration:underline}
+
+/* MOBILE ADJUSTMENTS */
+#mobile-menu-toggle{display:none;position:fixed;top:12px;left:12px;z-index:101;background:transparent;border:1px solid var(--panel-border);padding:8px;border-radius:8px;color:var(--accent)}
+@media (max-width:900px){
+  #left{width:280px;position:fixed;left:0;top:0;bottom:0;z-index:100;transform:translateX(-100%);transition:transform .28s ease}
+  #left.active{transform:translateX(0)}
+  #editor{width:100%;max-width:100%;bottom:0;height:50vh;top:auto !important;left:0 !important}
+  #mobile-menu-toggle{display:block}
+  .fab{right:12px;bottom:12px;padding:8px 10px}
+}
+
+/* FOCUSED ELEMENTS */
+:focus{outline:none}
+button:focus-visible, input:focus-visible, select:focus-visible {outline:2px solid rgba(110,72,170,0.22);outline-offset:2px}
+
+
+/* Auto font scaling for planets & sun */
+:root{ --planet-font-size: 16px; }
+.planet, .sun { font-size: var(--planet-font-size); line-height: 1.1; }
+
+/* Locked layout hint */
+.locked-layout #space { cursor: not-allowed; }
+.locked-layout .planet { cursor: not-allowed; }
